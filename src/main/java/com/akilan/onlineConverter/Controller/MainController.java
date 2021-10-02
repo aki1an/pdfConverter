@@ -17,12 +17,12 @@ public class MainController {
     @Autowired
     FileService fileService;
 
-    @GetMapping("/word-to-pdf")
+    @PostMapping("/word-to-pdf")
     public ResponseEntity<List<OutputFile>> wordFilesToPdfFiles(@RequestParam("file") List<MultipartFile> wordFiles) {
         return ResponseEntity.ok(fileService.getListOfWordAndConvertToListOfPDF(wordFiles));
     }
 
-    @GetMapping("/words-to-pdf-merged")
+    @PostMapping("/words-to-pdf-merged")
     public ResponseEntity<OutputFile> wordFilesToMergedPdf(@RequestParam("file") List<MultipartFile> wordFiles) {
         return ResponseEntity.ok(fileService.getListOfWordsAndConvertToSinglePdf(wordFiles));
     }

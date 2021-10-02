@@ -22,15 +22,15 @@ public class FileService {
 
     public List<Object> getListOfWordAndConvertToListOfPDF(List<MultipartFile> wordFiles) {
         List<Object> convertedPdfFiles = new ArrayList<>();
-        wordFiles.forEach(wordFile -> convertedPdfFiles.add(getWordAndConvertToPDF(wordFile)));
+        wordFiles.forEach(wordFile -> convertedPdfFiles.add(getWordAndConvertToPDF(wordFile).getOutputFile()));
         return convertedPdfFiles;
     }
 
     @SneakyThrows(IOException.class)
-    private Object getWordAndConvertToPDF(MultipartFile wordFile) {
+    private OutputFile getWordAndConvertToPDF(MultipartFile wordFile) {
         ByteArrayOutputStream out = new ByteArrayOutputStream();
         PdfConverter.getInstance().convert(new XWPFDocument(wordFile.getInputStream()), out, null);
-        return out.toByteArray();
+        return new OutputFile(out.toByteArray());
     }
 
     @SneakyThrows({DocumentException.class, IOException.class})

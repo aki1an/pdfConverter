@@ -25,6 +25,6 @@ public class MainController {
 
     @PostMapping(value = "/words-to-pdf-merged",produces = MediaType.APPLICATION_PDF_VALUE)
     public ResponseEntity<OutputFile> wordFilesToMergedPdf(@RequestParam("file") List<MultipartFile> wordFiles) {
-        return ResponseEntity.ok(fileService.getListOfWordsAndConvertToSinglePdf(wordFiles));
+        return ResponseEntity.ok(fileService.getListOfWordsAndConvertToSinglePdf(wordFiles).getOutputFile());
     }
 }

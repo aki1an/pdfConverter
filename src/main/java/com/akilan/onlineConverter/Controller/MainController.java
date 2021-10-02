@@ -19,7 +19,7 @@ public class MainController {
     FileService fileService;
 
     @PostMapping("/word-to-pdf")
-    public ResponseEntity<List<OutputFile>> wordFilesToPdfFiles(@RequestParam("file") List<MultipartFile> wordFiles) {
+    public ResponseEntity<List<Object>> wordFilesToPdfFiles(@RequestParam("file") List<MultipartFile> wordFiles) {
         return ResponseEntity.ok(fileService.getListOfWordAndConvertToListOfPDF(wordFiles));
     }
 

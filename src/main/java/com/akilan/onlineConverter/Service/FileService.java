@@ -20,17 +20,17 @@ import java.util.List;
 @Service
 public class FileService {
 
-    public List<OutputFile> getListOfWordAndConvertToListOfPDF(List<MultipartFile> wordFiles) {
-        List<OutputFile> convertedPdfFiles = new ArrayList<>();
+    public List<Object> getListOfWordAndConvertToListOfPDF(List<MultipartFile> wordFiles) {
+        List<Object> convertedPdfFiles = new ArrayList<>();
         wordFiles.forEach(wordFile -> convertedPdfFiles.add(getWordAndConvertToPDF(wordFile)));
         return convertedPdfFiles;
     }
 
     @SneakyThrows(IOException.class)
-    private OutputFile getWordAndConvertToPDF(MultipartFile wordFile) {
+    private Object getWordAndConvertToPDF(MultipartFile wordFile) {
         ByteArrayOutputStream out = new ByteArrayOutputStream();
         PdfConverter.getInstance().convert(new XWPFDocument(wordFile.getInputStream()), out, null);
-        return new OutputFile(out.toByteArray());
+        return out.toByteArray();
     }
 
     @SneakyThrows({DocumentException.class, IOException.class})

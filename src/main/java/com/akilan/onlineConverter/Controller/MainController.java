@@ -23,7 +23,7 @@ public class MainController {
         return ResponseEntity.ok(fileService.getListOfWordAndConvertToListOfPDF(wordFiles));
     }
 
-    @PostMapping(value = "/words-to-pdf-merged",produces =  MediaType.APPLICATION_OCTET_STREAM_VALUE)
+    @PostMapping(value = "/words-to-pdf-merged",produces = "application/pdf")
     public ResponseEntity wordFilesToMergedPdf(@RequestParam("file") List<MultipartFile> wordFiles) {
         return ResponseEntity.ok(fileService.getListOfWordsAndConvertToSinglePdf(wordFiles).getOutputFile());
     }

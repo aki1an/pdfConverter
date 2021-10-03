@@ -25,8 +25,9 @@ public class FileService {
         ByteArrayOutputStream fos = new ByteArrayOutputStream();
         ZipOutputStream zipOut = new ZipOutputStream(fos);
         for (MultipartFile srcFile : wordFiles) {
-            InputStream fis = new ByteArrayInputStream(srcFile.getBytes());
-            ZipEntry zipEntry = new ZipEntry(srcFile.getName());
+            InputStream fis = new ByteArrayInputStream(getWordAndConvertToPDF(srcFile).getOutputFile());
+            ZipEntry zipEntry = new ZipEntry(srcFile.getOriginalFilename().substring(0,srcFile.getOriginalFilename().indexOf("."))+".pdf");
+            System.out.println(srcFile.getOriginalFilename().substring(0,srcFile.getOriginalFilename().indexOf("."))+".pdf");
             zipOut.putNextEntry(zipEntry);
             byte[] bytes = new byte[1024];
             int length;
@@ -37,6 +38,7 @@ public class FileService {
         }
         zipOut.close();
         fos.close();
+
         return fos.toByteArray();
     }
 

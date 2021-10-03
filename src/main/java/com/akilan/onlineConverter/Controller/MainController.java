@@ -18,12 +18,12 @@ public class MainController {
     @Autowired
     FileService fileService;
 
-    @PostMapping(value = "/word-to-pdf",produces = MediaType.APPLICATION_OCTET_STREAM_VALUE)
+    @PostMapping(value = "/word-to-pdf",produces = "application/zip")
     public ResponseEntity wordFilesToPdfFiles(@RequestParam("file") List<MultipartFile> wordFiles) {
         return ResponseEntity.ok(fileService.getListOfWordAndConvertToListOfPDF(wordFiles));
     }
 
-    @PostMapping(value = "/words-to-pdf-merged",produces = MediaType.APPLICATION_PDF_VALUE)
+    @PostMapping(value = "/words-to-pdf-merged",produces =  MediaType.APPLICATION_OCTET_STREAM_VALUE)
     public ResponseEntity wordFilesToMergedPdf(@RequestParam("file") List<MultipartFile> wordFiles) {
         return ResponseEntity.ok(fileService.getListOfWordsAndConvertToSinglePdf(wordFiles).getOutputFile());
     }

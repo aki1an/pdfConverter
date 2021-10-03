@@ -11,19 +11,33 @@ import org.apache.poi.xwpf.usermodel.XWPFDocument;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
+import java.io.*;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipOutputStream;
 
 @Service
 public class FileService {
-
-    public List<Object> getListOfWordAndConvertToListOfPDF(List<MultipartFile> wordFiles) {
-        List<Object> convertedPdfFiles = new ArrayList<>();
-        wordFiles.forEach(wordFile -> convertedPdfFiles.add(getWordAndConvertToPDF(wordFile).getOutputFile()));
-        return convertedPdfFiles;
+    @SneakyThrows
+    public byte[] getListOfWordAndConvertToListOfPDF(List<MultipartFile> wordFiles) {
+        ByteArrayOutputStream fos = new ByteArrayOutputStream();
+        ZipOutputStream zipOut = new ZipOutputStream(fos);
+        for (MultipartFile srcFile : wordFiles) {
+            InputStream fis = new ByteArrayInputStream(srcFile.getBytes());
+            ZipEntry zipEntry = new ZipEntry(srcFile.getName());
+            zipOut.putNextEntry(zipEntry);
+            byte[] bytes = new byte[1024];
+            int length;
+            while((length = fis.read(bytes)) >= 0) {
+                zipOut.write(bytes, 0, length);
+            }
+            fis.close();
+        }
+        zipOut.close();
+        fos.close();
+        return fos.toByteArray();
     }
 
     @SneakyThrows(IOException.class)

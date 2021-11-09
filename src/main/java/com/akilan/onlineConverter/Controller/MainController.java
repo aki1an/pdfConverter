@@ -36,11 +36,11 @@ public class MainController {
     @CrossOrigin
     public ResponseEntity<SystemArch> wordFilesToMergedPdf() {
         SystemArch systemArch = new SystemArch();
-        systemArch.setProcessors(Runtime.getRuntime().availableProcessors() + "PROCESSORS");
+        systemArch.setProcessors(Runtime.getRuntime().availableProcessors() + "  PROCESSORS");
         systemArch.setAvailableRam(Runtime.getRuntime().freeMemory() / (1024 * 1024) + " MB");
         systemArch.setAllocatedRam(Runtime.getRuntime().totalMemory() / (1024 * 1024) + " MB");
         systemArch.setTotalRam(((OperatingSystemMXBean) ManagementFactory.getOperatingSystemMXBean()).getTotalMemorySize() / (1024 * 1024) + " MB");
-        systemArch.setTotalDiskVolume(new File("/").getTotalSpace() / (1024 * 1024 * 1024) + " MB");
+        systemArch.setTotalDiskVolume(new File("/").getTotalSpace() / (1024 * 1024 * 1024) + " GB");
         systemArch.setUsableDiskVolume(new File("/").getFreeSpace() / (1024 * 1024 * 1024) + " GB");
         return ResponseEntity.ok(systemArch);
     }
